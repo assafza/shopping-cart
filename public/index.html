@@ -154,7 +154,8 @@
   </div>
   <script id="cart-template" type = "text/x-handelbarsTemplate">
   <p class = "itemDetails" id = "{{itemName}}">
-      <span>{{itemName}}</span> - <span> {{itemPrice}}</span></br>
+      <span>{{itemName}}</span> <span>({{itemQuantity}})</span> - <span> {{itemPrice}}</span> <span class = "delete" id={{itemName}}><i class="fa fa-trash-o" aria-hidden="true"></i>
+</span></br>
   </p>
   </script>
   <script type="text/javascript" src="script.js"></script>

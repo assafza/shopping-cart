@@ -12,19 +12,41 @@ for (var i =0; i < cart.length ; i++  ){
   var template = Handlebars.compile(source);
   var newhtml = template({
     itemName : cart[i].name,
-    itemPrice : cart[i].price
+    itemPrice : cart[i].price,
+    itemQuantity : cart[i].quantity
 });
-  total += cart[i].price;
+  total += (cart[i].price * cart[i].quantity);
   $(".cart-list").append(newhtml);
+  $(".delete").on("click",deleteItem);
   }
 $(".total").text(total);
+}
+
+var deleteItem = function(){
+  var deleteItemName = $(this)[0].id;
+  for (var i = 0; i < cart.length ; i++  ){
+    if (cart[i].name == deleteItemName) {
+      cart.splice(i,1);
+      updateCart();
+      return;
+    }
+  }
 }
 
 var addItem = function (item) {
   //  Write this function. Remember this function has nothing to do with display.
   // It simply is for adding an item to the cart array, no HTML involved - honest ;-)
-  cart.push(item);
 
+for (var i = 0; i < cart.length ; i++  ){
+  if (cart[i].name == item.name) {
+    console.log(item);
+    cart[i].quantity ++;
+    console.log(item);
+    return;
+  }
+}
+cart.push(item);
+cart[cart.length-1].quantity = 1;
 }
 
 var clearCart = function () {
@@ -32,6 +54,15 @@ var clearCart = function () {
   cart = [];
   updateCart();
 }
+
+var addToCartClicked = function () {
+  var $cardItem = document.getElementsByClassName("card item");
+  var item = $(this).closest( $cardItem).data();
+  addItem(item);
+  updateCart();
+  $(".shopping-cart").css("display", "block");
+}
+
 
 $('.view-cart').on('click', function () {
   // : hide/show the shopping cart!
@@ -44,14 +75,8 @@ $('.view-cart').on('click', function () {
   }
 });
 
-$('.add-to-cart').on('click', function () {
-  var $cardItem = document.getElementsByClassName("card item");
-  var item = $(this).closest( $cardItem).data();
-  console.log(item);
-  addItem(item);
-  updateCart();
-  $(".shopping-cart").css("display", "block");
-});
+$('.add-to-cart').on('click', addToCartClicked );
+
 
 $('.clear-cart').on('click', function () {
   clearCart();
