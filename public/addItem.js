@@ -17,14 +17,7 @@ var addNewItem = function(itemName, itemPrice, itemUrl) {
 
     $(".container").append(itemHTML);
 
-    $('.add-to-cart').on('click', function() {
-        var $cardItem = document.getElementsByClassName("card item");
-        var item = $(this).closest($cardItem).data();
-        console.log(item);
-        addItem(item);
-        updateCart();
-        $(".shopping-cart").css("display", "block");
-    });
+    $('.add-to-cart').on('click', addToCartClicked);
 
 
 }
